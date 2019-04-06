@@ -8,7 +8,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
     @Column
@@ -35,8 +35,11 @@ public class User {
     @Column
     private String social_network_link;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Timetable> timetables;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Order> orders;
 
 
     public User() {
@@ -125,5 +128,13 @@ public class User {
 
     public void setTimetables(List<Timetable> timetables) {
         this.timetables = timetables;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
