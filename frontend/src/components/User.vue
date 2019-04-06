@@ -51,7 +51,7 @@ export default {
       params.append("firstName", this.user.firstName);
       params.append("lastName", this.user.lastName);
       axios
-        .post(`/user`, params)
+        .post(`/api/user`, params)
         .then(response => {
           // JSON responses are automatically parsed.
           this.response = response.data;
@@ -65,7 +65,7 @@ export default {
     },
     retrieveUser() {
       axios
-        .get(`/user/` + this.user.id)
+        .get(`/api/user/` + this.user.id)
         .then(response => {
           // JSON responses are automatically parsed.
           this.retrievedUser = response.data;
