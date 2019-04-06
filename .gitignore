@@ -1,5 +1,7 @@
 .idea/
 out/
+target/
+*.iml
 ### Node ###
 # Logs
 logs
