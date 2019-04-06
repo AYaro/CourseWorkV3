@@ -2,6 +2,7 @@ package com.coursework.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Table
@@ -34,6 +35,9 @@ public class Dish {
 
     @ManyToMany(mappedBy = "dishes")
     Set<Recipe> dishRecipes;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dish")
+    private List<OrderedDish> orderedDishes;
 
     public Dish() {
     }

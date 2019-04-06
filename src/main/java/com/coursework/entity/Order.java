@@ -2,6 +2,7 @@ package com.coursework.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Table(name = "orders")
 @Entity
@@ -29,6 +30,9 @@ public class Order {
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "User_id")
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private List<OrderedDish> orderedDishes;
 
     public Order() {
     }
