@@ -50,6 +50,16 @@ public class User {
         this.surname = surname;
     }
 
+    public User(String name, String surname, String password, String position, int salary_per_hour, long passport, String email) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.position = position;
+        this.salary_per_hour = salary_per_hour;
+        this.passport = passport;
+        this.email = email;
+    }
+
     public Integer getId() {
         return id;
     }

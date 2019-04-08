@@ -26,10 +26,11 @@ public class UserController {
         return HELLO_TEXT;
     }
 
+
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody long addNewUser (@RequestParam String firstName, @RequestParam String lastName) {
-        User user = new User(firstName, lastName);
+    public @ResponseBody long addNewUser (@RequestParam String firstName, @RequestParam String lastName, @RequestParam String password, @RequestParam String position, @RequestParam Integer salary_per_hour, @RequestParam long passport, @RequestParam String email) {
+        User user = new User(firstName, lastName, password, position, salary_per_hour, passport, email);
         userRepository.save(user);
 
         LOG.info(user.toString() + " successfully saved into DB");
