@@ -2,6 +2,9 @@
   <div id="app">
     <div id="nav">|
       <router-link to="/user">User</router-link>
+      <router-link to="/hello">Hello</router-link>
+      <router-link to="/test1">T1</router-link>
+      <router-link to="/test2">T2</router-link>
     </div>
     <router-view :hellomsg="msg"></router-view>
   </div>
