@@ -1,7 +1,14 @@
 <template>
   <div id="app">
-    <div id="nav">|
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <div id="nav">
+      |
       <router-link to="/user">User</router-link>
+      <router-link to="/index">Index</router-link>
       <router-link to="/hello">Hello</router-link>
       <router-link to="/test1">T1</router-link>
       <router-link to="/test2">T2</router-link>

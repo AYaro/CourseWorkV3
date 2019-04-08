@@ -24,6 +24,7 @@ public class Application {
             userRepository.save(new User("Chloe", "O'Brian"));
             userRepository.save(new User("Kim", "Bauer"));
             userRepository.save(new User("Kim", "Bauer"));
+            userRepository.save(new User("urname", "password", "mail@mail.com"));
             User user = new User("lol", "lolov");
             Timetable tb = new Timetable();
             tb.setUser(user);

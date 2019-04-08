@@ -25,7 +25,6 @@
 
 <script>
     /* eslint-disable no-console */
-
     import axios from "axios";
 // import {AXIOS} from './http-common'
 export default {
