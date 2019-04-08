@@ -1,5 +1,6 @@
 package com.coursework.entity;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +44,13 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Order> orders;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "authority_id") })
+    private Set<Authority> authorities = new HashSet<>();
+
 
 
     public User(String username, String password, String email) {
@@ -152,5 +160,13 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
