@@ -5,12 +5,12 @@ import com.coursework.entity.OrderedDish;
 import com.coursework.entity.User;
 import com.coursework.repository.OrderRepository;
 import com.coursework.repository.UserRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -18,13 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @RestController()
 @RequestMapping("/api/order")
 public class OrderController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
-    private static final String DEFAULT_STATUS = "Not assigned";
+    private static final String DEFAULT_STATUS = "Ждёт подтверждения";
 
     private final OrderRepository orderRepository;
 
@@ -53,14 +55,30 @@ public class OrderController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PATCH)
-    public @ResponseBody long changeOrder (@PathVariable("id") Integer id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        orderRepository.findById(id).get().setUser();
-
-        LOG.info(order.toString() + " successfully saved into DB");
-
+    public @ResponseBody long changeOrder (@PathVariable("id") Integer id, @RequestParam String status) {
+        Order order = orderRepository.findById(id).get();
+        if (isNull(order.getUser())) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            order.setUser((User) auth.getPrincipal());
+        }
+        order.setStatus(status);
+        LOG.info(order.toString() + " successfully changed");
+        orderRepository.save(order);
         return order.getId();
     }
+
+//    @RequestMapping(path = "/{id}", method = RequestMethod.)
+//    public @ResponseBody long endOrder (@PathVariable("id") Integer id, @RequestParam String status) {
+//        Order order = orderRepository.findById(id).get();
+//        if (isNull(order.getUser())) {
+//            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//            order.setUser((User) auth.getPrincipal());
+//        }
+//        order.setStatus(status);
+//        LOG.info(order.toString() + " successfully changed");
+//        orderRepository.save(order);
+//        return order.getId();
+//    }
 
     @GetMapping(path="/{id}")
     public @ResponseBody Order getOrderById(@PathVariable("id") Integer id) {
