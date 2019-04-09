@@ -1,7 +1,8 @@
 package com.coursework.entity;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.coursework.config.AuthorityType;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
+
+    @Column(unique = true)
+    private String username;
 
     @Column
     private String name;
@@ -44,6 +48,16 @@ public class User {
     @JsonBackReference
     private List<Order> orders;
 
+    @Column
+    private AuthorityType authority;
+
+
+
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     public User() {
     }
@@ -69,6 +83,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {
@@ -149,5 +171,13 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public AuthorityType getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(AuthorityType authority) {
+        this.authority = authority;
     }
 }

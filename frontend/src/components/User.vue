@@ -30,14 +30,14 @@
 
     <h4 v-if="showRetrievedUser">
       Retrieved User {{ retrievedUser.firstName }} {{ retrievedUser.lastName }}
-      {{ retrievedUser.position }} {{ retrievedUser.passport }}
     </h4>
   </div>
 </template>
 
 <script>
-/* eslint-disable no-console */
-import axios from "axios";
+    /* eslint-disable no-console */
+
+    import axios from "axios";
 // import {AXIOS} from './http-common'
 export default {
   name: "user",
@@ -113,10 +113,10 @@ ul {
   padding: 0;
 }
 li {
+  display: inline-block;
   margin: 0 10px;
 }
 a {
   color: #42b983;
 }
-
 </style>
