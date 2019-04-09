@@ -1,5 +1,7 @@
 package com.coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -29,12 +31,23 @@ public class Order {
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "User_id")
+    @JsonManagedReference
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderedDish> orderedDishes;
 
     public Order() {
+    }
+
+    public Order(Integer table_number, String comment, String status, Timestamp start_time, List<OrderedDish> orderedDishes) {
+        this.table_number = table_number;
+        Comment = comment;
+        Status = status;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.user = user;
+        this.orderedDishes = orderedDishes;
     }
 
     public Integer getId() {
