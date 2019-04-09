@@ -2,6 +2,7 @@ package com.coursework.controller;
 
 import com.coursework.entity.Order;
 import com.coursework.entity.OrderedDish;
+import com.coursework.entity.PdfUserDetails;
 import com.coursework.entity.User;
 import com.coursework.repository.OrderRepository;
 import com.coursework.repository.UserRepository;
@@ -30,9 +31,12 @@ public class OrderController {
 
     private final OrderRepository orderRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping(path = "/hello")
@@ -42,7 +46,7 @@ public class OrderController {
         return "asd";
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.PUT)
+    @RequestMapping(path = "", method = RequestMethod.PUT)
     public @ResponseBody long addNewOrder (@RequestParam Integer table_number,
                                            @RequestParam String comment,
                                            @RequestParam List<OrderedDish> orderedDishes) {
@@ -59,7 +63,8 @@ public class OrderController {
         Order order = orderRepository.findById(id).get();
         if (isNull(order.getUser())) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            order.setUser((User) auth.getPrincipal());
+//            order.setUser(userRepository.getUserByUsername(auth.getName()));
+            order.setUser((User) auth.getDetails());
         }
         order.setStatus(status);
         LOG.info(order.toString() + " successfully changed");

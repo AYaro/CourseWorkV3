@@ -38,7 +38,7 @@ public class Application {
             OrderedDish orderedDish = new OrderedDish();
 
             order.setComment("adasdsfsdf");
-            order.setUser(user);
+//            order.setUser(user);
             dish.setName("Soup");
             orderedDish.setDish(dish);
             orderedDish.setOrder(order);
