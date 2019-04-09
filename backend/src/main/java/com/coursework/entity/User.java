@@ -1,5 +1,6 @@
 package com.coursework.entity;
 import com.coursework.config.AuthorityType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -3,15 +3,20 @@
     <div class="login">
       <form id="signin" @submit.prevent="processSignIn">
         <h1>Авторизация</h1>
-        <h3>Введите логин</h3>
+        <h3>Введите логин:</h3>
         <input type="text" v-model="username" placeholder="логин" />
-        <p>Введённое сообщение: {{ username }}</p>
-        <h3>Введите пароль</h3>
+        <h3>Введите пароль:</h3>
         <input type="password" v-model="password" placeholder="пароль" />
-        <p>Введённое сообщение: {{ password }}</p>
-        <button type="submit">Войти</button>
+        <button
+          type="submit"
+          style="display: flex; margin: 10px auto 10px auto"
+        >
+          Войти
+        </button>
       </form>
-      <div v-bind="error" id="error" class="error-box" style="display: none;"></div>
+      <div id="showError" class="error" v-bind:class="{ showError: !error }">
+        Some server error
+      </div>
     </div>
   </div>
 </template>
@@ -31,24 +36,50 @@ export default {
   methods: {
     processSignIn: function() {
       axios
-        .post("http://localhost:9090/doLogin",
-        ("username=" + this.username + "&password=" + this.password)
+        .post(
+          "http://localhost:9090/login",
+          "username=" + this.username + "&password=" + this.password
         )
-        .then(response => {})
+        .then(function() {
+          window.location = "/index";
+        })
         .catch(e => {
+          this.error = true;
           this.errors.push(e);
         });
     },
-
     processRegistration: function() {
       "#error".slideUp();
     },
     initRegistration: function() {
       "#registration".slideToggle();
     }
+  },
+  watch: {
+    username: function() {
+      this.error = false;
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.form {
+  padding: 50px;
+}
+.login {
+  margin: auto;
+  min-width: 300px;
+  width: 20%;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 16px;
+}
+.error {
+  color: darkred;
+}
+.showError {
+  display: none;
+}
+</style>

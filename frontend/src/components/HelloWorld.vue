@@ -1,24 +1,24 @@
 <template>
   <div class="form">
-  <div class="start">
-    <h1>{{ msg }}</h1>
-    <div class="order">
-      <router-link to="/order">Заказать</router-link>
+    <div class="start">
+      <h1>{{ msg }}</h1>
+      <div class="order">
+        <router-link to="/order">Заказать</router-link>
+      </div>
+      <div class="login">
+        <router-link to="/login">Авторизоваться</router-link>
+      </div>
     </div>
-    <div class="login">
-      <router-link to="/login">Авторизоваться</router-link>
-    </div>
-  </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  }
-};
+  export default {
+    name: "HelloWorld",
+    props: {
+      msg: String
+    }
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -51,8 +51,8 @@ export default {
   .login{
     margin-bottom: 40px;
   }
-a {
-  color: black;
-  text-decoration: none;
-}
+  a {
+    color: black;
+    text-decoration: none;
+  }
 </style>

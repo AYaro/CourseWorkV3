@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import User from '@/components/User'
-import Display from "./views/Display.vue";
+import Login from './components/Login'
+import Home from './views/Home'
+import Display from "./views/Display.vue"
+import User from "./components/User"
+import Order from "./components/Order"
 
 Vue.use(Router);
 
@@ -13,6 +16,11 @@ export default new Router({
       component: Display
     },
     {
+      path: '/Order',
+      name: 'Order',
+      component: Order
+    },
+    {
       path: "/",
       name: "home",
       component: Home
@@ -21,6 +29,11 @@ export default new Router({
       path: "/login",
       name: "login",
       component: Login
+    },
+    {
+      path: "/user",
+      name: "User",
+      component: User
     },
     {
       path: "/about",
@@ -40,4 +53,4 @@ export default new Router({
           import(/* webpackChunkName: "about" */ "./views/Contacts.vue")
     }
   ]
-})
+});

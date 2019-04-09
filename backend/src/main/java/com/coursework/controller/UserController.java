@@ -26,7 +26,7 @@ public class UserController {
         return HELLO_TEXT;
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
+    @RequestMapping(path = "", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody long addNewUser (@RequestParam String firstName, @RequestParam String lastName) {
         User user = new User(firstName, lastName);
