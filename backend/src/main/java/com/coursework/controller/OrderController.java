@@ -1,15 +1,19 @@
 package com.coursework.controller;
 
 import com.coursework.entity.Order;
+import com.coursework.entity.OrderedDish;
 import com.coursework.entity.User;
 import com.coursework.repository.OrderRepository;
 import com.coursework.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +23,8 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+
+    private static final String DEFAULT_STATUS = "Not assigned";
 
     private final OrderRepository orderRepository;
 
@@ -34,16 +40,27 @@ public class OrderController {
         return "asd";
     }
 
-//    @RequestMapping(path = "/", method = RequestMethod.PUT)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public @ResponseBody long addNewOrder (@RequestParam String firstName, @RequestParam String lastName) {
-//        User user = new User(firstName, lastName);
-//        userRepository.save(user);
-//
-//        LOG.info(user.toString() + " successfully saved into DB");
-//
-//        return user.getId();
-//    }
+    @RequestMapping(path = "/", method = RequestMethod.PUT)
+    public @ResponseBody long addNewOrder (@RequestParam Integer table_number,
+                                           @RequestParam String comment,
+                                           @RequestParam List<OrderedDish> orderedDishes) {
+        Order order = new Order(table_number, comment, DEFAULT_STATUS, new Timestamp(System.currentTimeMillis()), orderedDishes);
+        orderRepository.save(order);
+
+        LOG.info(order.toString() + " successfully saved into DB");
+
+        return order.getId();
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PATCH)
+    public @ResponseBody long changeOrder (@PathVariable("id") Integer id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        orderRepository.findById(id).get().setUser();
+
+        LOG.info(order.toString() + " successfully saved into DB");
+
+        return order.getId();
+    }
 
     @GetMapping(path="/{id}")
     public @ResponseBody Order getOrderById(@PathVariable("id") Integer id) {

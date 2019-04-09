@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
@@ -26,7 +26,7 @@ public class UserController {
         return HELLO_TEXT;
     }
 
-    @RequestMapping(path = "/user", method = RequestMethod.POST)
+    @RequestMapping(path = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody long addNewUser (@RequestParam String firstName, @RequestParam String lastName) {
         User user = new User(firstName, lastName);
@@ -37,7 +37,7 @@ public class UserController {
         return user.getId();
     }
 
-    @GetMapping(path="/user/{id}")
+    @GetMapping(path="/{id}")
     public @ResponseBody User getUserById(@PathVariable("id") Integer id) {
         LOG.info("Reading user with id " + id + " from database.");
         return userRepository.findById(id).get();

@@ -1,5 +1,7 @@
 package com.coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
@@ -14,6 +16,7 @@ public class Timetable {
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "User_id")
+    @JsonIgnore
     private User user;
 
     @Column
