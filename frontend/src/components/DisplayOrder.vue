@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-for="order in orders">
+        <div v-bind:key="order.id" v-for="order in orders">
             <h3>
-                {{order}}
+                {{order.Status}}
             </h3>
         </div>
     </div>
@@ -13,7 +13,22 @@
         name: "DisplayOrder",
         data() {
             return {
-                orders: []
+                orders: [
+                    {
+                        id: 3,
+                        Comment: "asd",
+                        Status: "qwe",
+                        start_time: 1,
+                        end_time: null
+                    },
+                    {
+                        id: 1,
+                        Comment: "asd",
+                        Status: "qwe",
+                        start_time: 1,
+                        end_time: null
+                    }
+                ]
             }
         },
         methods: {

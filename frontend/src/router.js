@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import User from '@/components/User'
+import Display from "./views/Display.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -8,7 +10,7 @@ export default new Router({
     {
       path: '/display',
       name: 'Display',
-      component: DisplayOrder
+      component: Display
     },
     {
       path: '/user',
