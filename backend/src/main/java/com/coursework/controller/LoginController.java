@@ -30,11 +30,11 @@ public class LoginController {
         model.addAttribute("error", "true");
         return "login";
     }
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout1", method = RequestMethod.GET)
     public String logout(SessionStatus session) {
         SecurityContextHolder.getContext().setAuthentication(null);
         session.setComplete();
-        return "redirect:/welcome";
+        return "redirect:/hello";
     }
     @RequestMapping(value = "/postLogin", method = RequestMethod.POST)
     public String postLogin(Model model, HttpSession session) {
@@ -45,7 +45,7 @@ public class LoginController {
         User loggedInUser = ((PdfUserDetails) authentication.getPrincipal()).getUserDetails();
         model.addAttribute("currentUser", loggedInUser.getUsername());
         session.setAttribute("userId", loggedInUser.getId());
-        return "redirect:/wallPage";
+        return "forward:/index.html";
     }
     private void validatePrinciple(Object principal) {
         if (!(principal instanceof PdfUserDetails)) {

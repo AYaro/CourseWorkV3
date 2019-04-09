@@ -1,20 +1,24 @@
 package com.coursework.entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class PdfUserDetails implements UserDetails {
     private User user;
+
     public PdfUserDetails(User user) {
         this.user = user;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getName().toString())).collect(Collectors.toList());
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(user.getAuthority().toString());
+
     }
     public int getId() {
         return user.getId();

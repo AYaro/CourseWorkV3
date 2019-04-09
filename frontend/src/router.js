@@ -1,32 +1,38 @@
 import Vue from "vue";
 import Router from "vue-router";
-import User from "@/components/User";
-import Test1 from "@/components/Test1";
-import Test2 from "@/components/Test2";
-import Index from "./components/Index";
+import Home from "./views/Home";
+import Login from "./components/Login"
+
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: "/user",
-      name: "User",
-      component: User
+      path: "/",
+      name: "home",
+      component: Home
     },
     {
-      path: "/test1",
-      name: "Test1",
-      component: Test1
+      path: "/login",
+      name: "login",
+      component: Login
     },
     {
-      path: "/test2",
-      name: "Test2",
-      component: Test2
-    },
-    {
-      path: "/index",
-      name: "Index",
-      component: Index
+      path: "/about",
+      name: "about",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+        import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },{
+      path: "/contacts",
+      name: "contacts",
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () =>
+          import(/* webpackChunkName: "about" */ "./views/Contacts.vue")
     }
   ]
 });

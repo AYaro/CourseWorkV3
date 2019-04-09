@@ -1,4 +1,6 @@
 package com.coursework.entity;
+import com.coursework.config.AuthorityType;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -45,11 +47,8 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Order> orders;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_authority",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "authority_id") })
-    private Set<Authority> authorities = new HashSet<>();
+    @Column
+    private AuthorityType authority;
 
 
 
@@ -162,11 +161,11 @@ public class User {
         this.orders = orders;
     }
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
+    public AuthorityType getAuthority() {
+        return authority;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
+    public void setAuthority(AuthorityType authority) {
+        this.authority = authority;
     }
 }

@@ -1,40 +1,39 @@
 <template>
   <div id="app">
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
-    <div id="nav">
-      |
-      <router-link to="/user">User</router-link>
-      <router-link to="/index">Index</router-link>
-      <router-link to="/hello">Hello</router-link>
-      <router-link to="/test1">T1</router-link>
-      <router-link to="/test2">T2</router-link>
-    </div>
-    <router-view :hellomsg="msg"></router-view>
+    <Header />
+    <router-view />
   </div>
 </template>
 
+<script>
+import Header from "./components/layout/Header";
+export default {
+  name: "app",
+  components: {
+    Header
+  }
+};
+</script>
+
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-#nav {
-  padding: 30px;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.4;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.btn {
+  display: inline-block;
+  border: none;
+  background: #555;
+  color: #fff;
+  padding: 7px 20px;
+  cursor: pointer;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.btn:hover {
+  background: #666;
 }
 </style>

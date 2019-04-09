@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/wallPage").hasAnyRole("ADMIN", "USER")
+                .authorizeRequests().antMatchers("/index").hasAnyRole("ADMIN", "USER")
                 .and()
                 .authorizeRequests().antMatchers("/login", "/resource/**").permitAll()
                 .and()
@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successForwardUrl("/postLogin")
                 .failureUrl("/loginFailed")
                 .and()
-                .logout().logoutUrl("/doLogout").logoutSuccessUrl("/logout").permitAll()
+                .logout().logoutUrl("/doLogout").logoutSuccessUrl("/logout1").permitAll()
                 .and()
                 .csrf().disable();
     }

@@ -1,5 +1,6 @@
 package com.coursework;
 
+import com.coursework.config.AuthorityType;
 import com.coursework.entity.*;
 import com.coursework.repository.*;
 import org.slf4j.Logger;
@@ -25,8 +26,8 @@ public class Application {
             userRepository.save(new User("Chloe", "O'Brian"));
             userRepository.save(new User("Kim", "Bauer"));
             userRepository.save(new User("Kim", "Bauer"));
-            userRepository.save(new User("urname", (new BCryptPasswordEncoder().encode("password")), "mail@mail.com"));
-            User user = new User("lol", "lolov");
+            User user = new User("urname", (new BCryptPasswordEncoder().encode("password")), "mail@mail.com");
+            user.setAuthority(AuthorityType.ROLE_ADMIN);
             Timetable tb = new Timetable();
             tb.setUser(user);
             userRepository.save(user);

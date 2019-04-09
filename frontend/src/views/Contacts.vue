@@ -1,6 +1,6 @@
 <template>
-  <div class="about">
-    <h1>about us</h1>
+  <div class="contacts">
+    <h1>Contact us</h1>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -13,9 +13,8 @@
   </div>
 </template>
 <style scoped>
-.about {
+.contacts {
   text-align: center;
-  margin-top: 10px;
   width: 80%;
   margin: auto;
 }
