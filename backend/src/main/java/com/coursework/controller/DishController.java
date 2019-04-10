@@ -26,6 +26,7 @@ public class DishController {
     public @ResponseBody
     String sayHello() {
         LOG.info("GET called on /hello resource");
+//        dishRepository.findById(1)
         return "asd";
     }
 

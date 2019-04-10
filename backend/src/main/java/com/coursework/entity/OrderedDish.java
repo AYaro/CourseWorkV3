@@ -1,12 +1,16 @@
 package com.coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Table
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class OrderedDish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +30,12 @@ public class OrderedDish {
 
     @ManyToOne(targetEntity = Order.class)
     @JoinColumn(name = "Order_id")
-    @JsonManagedReference
+    @JsonIgnore
     private Order order;
 
     @ManyToOne(targetEntity = Dish.class)
     @JoinColumn(name = "Dish_id")
-        private Dish dish;
+    private Dish dish;
 
     public OrderedDish() {
     }

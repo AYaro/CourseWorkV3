@@ -3,14 +3,11 @@ package com.coursework.controller;
 import com.coursework.SendMailServ;
 import com.coursework.entity.Order;
 import com.coursework.entity.OrderedDish;
-import com.coursework.entity.PdfUserDetails;
-import com.coursework.entity.User;
 import com.coursework.repository.OrderRepository;
 import com.coursework.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.Objects.isNull;
 
 @RestController()
 @RequestMapping("/api/order")
@@ -48,7 +42,17 @@ public class OrderController {
     String sayHello() {
         LOG.info("GET called on /hello resource");
 //        sendMailServ.SendMail("dunaevai135@ya.ru", "Test", "test");
+//        orderRepository.findById(1).get().getOrderedDishes().get(0);
         return "asd";
+    }
+
+    @RequestMapping(path = "/hello2")
+    public @ResponseBody
+    List<OrderedDish> sayHello2() {
+        LOG.info("GET called on /hello resource");
+//        sendMailServ.SendMail("dunaevai135@ya.ru", "Test", "test");
+//        orderRepository.findById(1).get().getOrderedDishes().get(0);
+        return orderRepository.findById(1).get().getOrderedDishes();
     }
 
     @RequestMapping(path = "", method = RequestMethod.PUT)
