@@ -62,7 +62,7 @@ public class Application {
 
             dishRepository.save(dish);
 
-            {
+            if(false) {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setFrom("Парользабыл <javamail@dunaevai135.me>");
                 message.setTo("dunaevai135@ya.ru");
