@@ -61,10 +61,10 @@ public class OrderController {
     @RequestMapping(path = "/{id}", method = RequestMethod.PATCH)
     public @ResponseBody long changeOrder (@PathVariable("id") Integer id, @RequestParam String status) {
         Order order = orderRepository.findById(id).get();
-        if (isNull(order.getUser())) {
+        if (order.getUser() == null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//            order.setUser(userRepository.getUserByUsername(auth.getName()));
-            order.setUser((User) auth.getDetails());
+            order.setUser(userRepository.getUserByUsername(auth.getName()));
+//            order.setUser((User) auth.getDetails());
         }
         order.setStatus(status);
         LOG.info(order.toString() + " successfully changed");
@@ -72,18 +72,14 @@ public class OrderController {
         return order.getId();
     }
 
-//    @RequestMapping(path = "/{id}", method = RequestMethod.)
-//    public @ResponseBody long endOrder (@PathVariable("id") Integer id, @RequestParam String status) {
-//        Order order = orderRepository.findById(id).get();
-//        if (isNull(order.getUser())) {
-//            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//            order.setUser((User) auth.getPrincipal());
-//        }
-//        order.setStatus(status);
+    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
+    public @ResponseBody long endOrder (@PathVariable("id") Integer id, @RequestParam Timestamp endTime ) {
+        Order order = orderRepository.findById(id).get();
+        order.setEnd_time(endTime);
 //        LOG.info(order.toString() + " successfully changed");
-//        orderRepository.save(order);
-//        return order.getId();
-//    }
+        orderRepository.save(order);
+        return order.getId();
+    }
 
     @GetMapping(path="/{id}")
     public @ResponseBody Order getOrderById(@PathVariable("id") Integer id) {
@@ -91,7 +87,7 @@ public class OrderController {
         return orderRepository.findById(id).get();
     }
 
-    @GetMapping(path="/")
+    @GetMapping(path="")
     public @ResponseBody
     List<Order> getOrders() {
 //        LOG.info("Reading user with id " + id + " from database.");

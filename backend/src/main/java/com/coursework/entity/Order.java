@@ -1,6 +1,9 @@
 package com.coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -8,6 +11,7 @@ import java.util.List;
 
 @Table(name = "orders")
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order {
 
     @Id
@@ -45,8 +49,6 @@ public class Order {
         Comment = comment;
         Status = status;
         this.start_time = start_time;
-        this.end_time = end_time;
-        this.user = user;
         this.orderedDishes = orderedDishes;
     }
 
@@ -104,5 +106,13 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<OrderedDish> getOrderedDishes() {
+        return orderedDishes;
+    }
+
+    public void setOrderedDishes(List<OrderedDish> orderedDishes) {
+        this.orderedDishes = orderedDishes;
     }
 }

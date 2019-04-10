@@ -1,6 +1,9 @@
 package com.coursework.entity;
 import com.coursework.config.AuthorityType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,6 +12,7 @@ import java.util.Set;
 
 @Table(name = "users")
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id
@@ -46,7 +50,6 @@ public class User {
     private List<Timetable> timetables;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @JsonBackReference
     private List<Order> orders;
 
     @Column
@@ -182,3 +185,4 @@ public class User {
         this.authority = authority;
     }
 }
+

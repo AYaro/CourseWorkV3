@@ -1,5 +1,7 @@
 package com.coursework.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -19,8 +21,12 @@ public class OrderedDish {
     @Column
     private Timestamp end_time;
 
+    @Column
+    private Integer quantity;
+
     @ManyToOne(targetEntity = Order.class)
     @JoinColumn(name = "Order_id")
+    @JsonManagedReference
     private Order order;
 
     @ManyToOne(targetEntity = Dish.class)
@@ -76,5 +82,13 @@ public class OrderedDish {
 
     public void setDish(Dish dish) {
         this.dish = dish;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
