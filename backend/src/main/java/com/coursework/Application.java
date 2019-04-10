@@ -64,6 +64,7 @@ public class Application {
 
             {
                 SimpleMailMessage message = new SimpleMailMessage();
+                message.setFrom("Парользабыл <javamail@dunaevai135.me>");
                 message.setTo("dunaevai135@ya.ru");
                 message.setSubject("Test");
                 message.setText("Нео проснись ты обосрался");
