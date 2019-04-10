@@ -41,19 +41,37 @@ public class Application {
 
             Order order = new Order();
             Dish dish = new Dish();
+            Dish dish2 = new Dish();
+            Dish dish3 = new Dish();
             OrderedDish orderedDish = new OrderedDish();
+            OrderedDish orderedDish2 = new OrderedDish();
+            OrderedDish orderedDish3 = new OrderedDish();
 
             order.setComment("adasdsfsdf");
-//            order.setUser(user);
+            order.setTable(2);
+            order.setStatus("not ready");
             dish.setName("Soup");
             dish.setInMenu(true);
             dish.setCategory("Categor");
             orderedDish.setDish(dish);
+            orderedDish.setQuantity(3);
             orderedDish.setOrder(order);
+            orderedDish2.setDish(dish2);
+            orderedDish2.setQuantity(5);
+            orderedDish2.setOrder(order);
+            orderedDish3.setDish(dish3);
+            orderedDish3.setQuantity(1);
+            orderedDish3.setOrder(order);
+
 
             dishRepository.save(dish);
             orderRepository.save(order);
+            dishRepository.save(dish2);;
+            dishRepository.save(dish3);
+
             orderedDishRepository.save(orderedDish);
+            orderedDishRepository.save(orderedDish2);
+            orderedDishRepository.save(orderedDish3);
 
             dish = new Dish();
             dish.setName("Жареные гвозди");

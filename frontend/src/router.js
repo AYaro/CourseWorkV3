@@ -5,6 +5,7 @@ import Home from './views/Home'
 import Display from "./views/Display.vue"
 import User from "./components/User"
 import Order from "./components/Order"
+import CurrentOrders from "./components/CurrentOrders";
 
 Vue.use(Router);
 
@@ -19,6 +20,11 @@ export default new Router({
       path: '/Order',
       name: 'Order',
       component: Order
+    },
+    {
+      path: '/worker/currentOrders',
+      name: 'currentOrders',
+      component: CurrentOrders
     },
     {
       path: "/",

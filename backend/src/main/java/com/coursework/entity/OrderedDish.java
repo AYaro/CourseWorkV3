@@ -31,7 +31,7 @@ public class OrderedDish {
 
     @ManyToOne(targetEntity = Dish.class)
     @JoinColumn(name = "Dish_id")
-    private Dish dish;
+        private Dish dish;
 
     public OrderedDish() {
     }

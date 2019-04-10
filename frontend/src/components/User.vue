@@ -53,7 +53,8 @@ export default {
         salary_per_hour: 0,
         passport: 0,
         email: "",
-        id: 0
+        id: 0,
+        par: []
       },
       showResponse: false,
       retrievedUser: {},
@@ -71,6 +72,8 @@ export default {
       params.append("salary_per_hour", this.user.salary_per_hour);
       params.append("passport", this.user.passport);
       params.append("email", this.user.email);
+      params.append("adad", this.user.par);
+
 
       axios
         .post(`/api/user`, params)
