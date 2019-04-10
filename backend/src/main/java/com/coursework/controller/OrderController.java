@@ -50,7 +50,9 @@ public class OrderController {
     public @ResponseBody long addNewOrder (@RequestParam Integer table_number,
                                            @RequestParam String comment,
                                            @RequestParam List<OrderedDish> orderedDishes) {
-        Order order = new Order(table_number, comment, DEFAULT_STATUS, new Timestamp(System.currentTimeMillis()), orderedDishes);
+        Order order = new Order(table_number, comment, DEFAULT_STATUS, new Timestamp(System.currentTimeMillis()));
+        orderedDishes.forEach(o -> o.setOrder(order));
+        order.setOrderedDishes(orderedDishes);
         orderRepository.save(order);
 
         LOG.info(order.toString() + " successfully saved into DB");
@@ -90,6 +92,15 @@ public class OrderController {
     @GetMapping(path="")
     public @ResponseBody
     List<Order> getOrders() {
+//        LOG.info("Reading user with id " + id + " from database.");
+        List<Order> target = new ArrayList<>();
+        orderRepository.findAll().forEach(o -> {if (o.getEnd_time() == null) {target.add(o);}});
+        return target;
+    }
+
+    @GetMapping(path="/all")
+    public @ResponseBody
+    List<Order> getAllOrders() {
 //        LOG.info("Reading user with id " + id + " from database.");
         List<Order> target = new ArrayList<>();
         orderRepository.findAll().forEach(target::add);

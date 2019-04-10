@@ -44,12 +44,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer table_number, String comment, String status, Timestamp start_time, List<OrderedDish> orderedDishes) {
+    public Order(Integer table_number, String comment, String status, Timestamp start_time) {
         this.table_number = table_number;
         Comment = comment;
         Status = status;
         this.start_time = start_time;
-        this.orderedDishes = orderedDishes;
     }
 
     public Integer getId() {
