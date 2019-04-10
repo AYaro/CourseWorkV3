@@ -39,7 +39,7 @@ public class DishController {
     List<Dish> getDishs() {
 //        LOG.info("Reading user with id " + id + " from database.");
         List<Dish> target = new ArrayList<>();
-        dishRepository.findAll().forEach(target::add);
+        dishRepository.findAll().forEach(o -> {if (o.isInmenu()) {target.add(o);}});
         return target;
     }
 }
