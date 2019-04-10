@@ -1,5 +1,6 @@
 package com.coursework.controller;
 
+import com.coursework.SendMailServ;
 import com.coursework.entity.Order;
 import com.coursework.entity.OrderedDish;
 import com.coursework.entity.PdfUserDetails;
@@ -34,6 +35,9 @@ public class OrderController {
     private final UserRepository userRepository;
 
     @Autowired
+    private SendMailServ sendMailServ;
+
+    @Autowired
     public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
@@ -43,6 +47,7 @@ public class OrderController {
     public @ResponseBody
     String sayHello() {
         LOG.info("GET called on /hello resource");
+//        sendMailServ.SendMail("dunaevai135@ya.ru", "Test", "test");
         return "asd";
     }
 

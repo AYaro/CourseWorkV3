@@ -43,9 +43,6 @@ public class User {
     @Column
     private String email;
 
-    @Column
-    private String social_network_link;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Timetable> timetables;
 
@@ -151,14 +148,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSocial_network_link() {
-        return social_network_link;
-    }
-
-    public void setSocial_network_link(String social_network_link) {
-        this.social_network_link = social_network_link;
     }
 
     public List<Timetable> getTimetables() {
