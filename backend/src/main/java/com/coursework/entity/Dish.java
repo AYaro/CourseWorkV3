@@ -27,11 +27,11 @@ public class Dish {
     @Column
     private String description;
 
-    @Column
+    @Column(columnDefinition="TEXT")
     private String image;
 
     @Column
-    private boolean inmenu;
+    private boolean inMenu;
 
     @ManyToMany(mappedBy = "dishes")
     Set<Recipe> dishRecipes;
@@ -40,6 +40,16 @@ public class Dish {
     private List<OrderedDish> orderedDishes;
 
     public Dish() {
+    }
+
+    public Dish(String name, String category, int price, int weight, String description, String image, boolean inMenu) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.weight = weight;
+        this.description = description;
+        this.image = image;
+        this.inMenu = inMenu;
     }
 
     public Set<Recipe> getDishRecipes() {
@@ -106,11 +116,11 @@ public class Dish {
         this.image = image;
     }
 
-    public boolean isInmenu() {
-        return inmenu;
+    public boolean isInMenu() {
+        return inMenu;
     }
 
-    public void setInmenu(boolean inmenu) {
-        this.inmenu = inmenu;
+    public void setInMenu(boolean inMenu) {
+        this.inMenu = inMenu;
     }
 }
