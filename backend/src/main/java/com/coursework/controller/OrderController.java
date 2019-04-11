@@ -3,6 +3,7 @@ package com.coursework.controller;
 import com.coursework.SendMailServ;
 import com.coursework.entity.Order;
 import com.coursework.entity.OrderedDish;
+import com.coursework.repository.DishRepository;
 import com.coursework.repository.OrderRepository;
 import com.coursework.repository.OrderedDishRepository;
 import com.coursework.repository.UserRepository;
@@ -29,6 +30,8 @@ public class OrderController {
 
     private final UserRepository userRepository;
 
+    private final DishRepository dishRepository;
+
     @Autowired
     private SendMailServ sendMailServ;
 
@@ -36,9 +39,10 @@ public class OrderController {
     private OrderedDishRepository orderedDishRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, DishRepository dishRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+        this.dishRepository = dishRepository;
     }
 
     @RequestMapping(path = "/hello")
@@ -67,6 +71,7 @@ public class OrderController {
 //        LOG.info("ordered: " + orderedDishes.get(0).getQuantity());
         orderedDishes.forEach(o -> {
             o.setOrder(order);
+            o.setDish(dishRepository.findById(o.getDish().getId()).get());
         });
         order.setOrderedDishes(orderedDishes);
 
