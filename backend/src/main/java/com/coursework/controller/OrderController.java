@@ -71,7 +71,7 @@ public class    OrderController {
 //        LOG.info("ordered: " + orderedDishes.get(0).getQuantity());
         orderedDishes.forEach(o -> {
             o.setOrder(order);
-            o.setDish(dishRepository.findById(o.getDish().getId()).get());
+//            o.setDish(dishRepository.findById(o.getDish().getId()).get());
         });
         order.setOrderedDishes(orderedDishes);
 

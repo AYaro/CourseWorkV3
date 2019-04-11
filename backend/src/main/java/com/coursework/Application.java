@@ -14,6 +14,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.sql.Time;
+import java.util.Date;
+
 @SpringBootApplication
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -35,8 +38,17 @@ public class Application {
             User user = new User("urname", (new BCryptPasswordEncoder().encode("password")), "mail@mail.com");
             user.setAuthority(AuthorityType.ROLE_ADMIN);
             Timetable tb = new Timetable();
-            tb.setUser(user);
             userRepository.save(user);
+            tb.setUser(user);
+            tb.setDay(new Date());
+            tb.setStart_time(new Time(1, 2, 4));
+            tb.setEnd_time(new Time(3, 2, 4));
+            timetableRepository.save(tb);
+            tb = new Timetable();
+            tb.setUser(user);
+            tb.setDay(new Date());
+            tb.setStart_time(new Time(6, 2, 4));
+            tb.setEnd_time(new Time(9, 2, 4));
             timetableRepository.save(tb);
 
             Order order = new Order();

@@ -43,6 +43,12 @@ public class DishController {
         return dish.getId();
     }
 
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void dellDish(@PathVariable("id") Integer id) {
+        dishRepository.deleteById(id);
+//        return ;
+    }
+
 
     @GetMapping(path="/categories")
     public @ResponseBody

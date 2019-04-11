@@ -1,14 +1,21 @@
 package com.coursework.controller;
 
 import com.coursework.SendMailServ;
+import com.coursework.entity.Order;
+import com.coursework.entity.Timetable;
 import com.coursework.entity.User;
 import com.coursework.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController()
 @RequestMapping("/api/user")
@@ -64,6 +71,21 @@ public class UserController {
     public @ResponseBody User getUserById(@PathVariable("id") Integer id) {
         LOG.info("Reading user with id " + id + " from database.");
         return userRepository.findById(id).get();
+    }
+
+    @GetMapping(path="/all")
+    public @ResponseBody
+    List<User> getUsers() {
+        List<User> target = new ArrayList<>();
+        userRepository.findAll().forEach(target::add);
+        return target;
+    }
+
+    @GetMapping(path = "/table")
+    public @ResponseBody
+    List<Timetable> getUserTable () {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.getUserByUsername(auth.getName()).getTimetables();
     }
 
 }
