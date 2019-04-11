@@ -43,7 +43,7 @@ export default new Router({
       component: Login
     },
     {
-      path: "/user",
+      path: "/admin/user",
       name: "User",
       component: User
     },

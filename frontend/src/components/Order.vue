@@ -42,8 +42,6 @@
                   :key="dish.id"
                 >
                   <v-card
-                    color="blue-grey darken-2"
-                    class="white--text"
                     v-on:click="onItemClicked(dish)"
                   >
                     <v-card-title primary-title>

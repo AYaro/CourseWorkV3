@@ -2,18 +2,18 @@
   <div class="user">
     <h1>Create User</h1>
 
-    <h3>Just some database interaction...</h3>
-
     <input type="text" v-model="user.firstName" placeholder="first name" />
     <input type="text" v-model="user.lastName" placeholder="last name" />
+    <input type="text" v-model="user.username" placeholder="username" />
     <select v-model="user.position">
-      <option value="Kitchen">Поваренок</option>
-      <option value="Hall">Крыса Лариса</option>
+      <option value="Kitchen">Повар</option>
+      <option value="Hall">Зал</option>
     </select>
-    <input type="text" v-model="user.passport" placeholder="passport" />
+    <input type="text" v-model="user.password" placeholder="password" />
+    <input type="number" v-model="user.passport" placeholder="passport" />
     <input type="text" v-model="user.email" placeholder="email" />
     <input
-      type="text"
+      type="number"
       v-model="user.salary_per_hour"
       placeholder="salary per hour"
     />
@@ -49,9 +49,10 @@ export default {
         lastName: "",
         firstName: "",
         password: "",
+        username: "",
         position: "",
-        salary_per_hour: 0,
-        passport: 0,
+        salary_per_hour: null,
+        passport: null,
         email: "",
         id: 0,
         par: []
@@ -122,4 +123,10 @@ li {
 a {
   color: #42b983;
 }
+  input{
+    border: 1px solid lightgray;
+  }
+  select{
+    border: 1px solid lightgray;
+  }
 </style>

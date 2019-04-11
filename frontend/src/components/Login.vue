@@ -41,7 +41,7 @@ export default {
           "username=" + this.username + "&password=" + this.password
         )
         .then(function() {
-          window.location = "/index";
+          window.location = "/#/worker/currentOrders";
         })
         .catch(e => {
           this.error = true;

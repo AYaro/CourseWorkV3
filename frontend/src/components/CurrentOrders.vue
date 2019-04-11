@@ -101,7 +101,7 @@ export default {
       items: [{ title: "Заказы" }, { title: "Расписание" }],
       orders: [{ id: 1, orderedDishes: { name: "Ad" } }],
       currentCategory: "Заказы",
-      statuses: ["Foo", "Bar", "Fizz", "Buzz"]
+      statuses: ["Не подтврден", "Подтвержден", "Готовитья", "Fотов", "Подан"]
     };
   },
   created: function() {
