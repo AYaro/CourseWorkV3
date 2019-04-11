@@ -46,11 +46,11 @@ public class UserController {
                                           @RequestParam String position,
                                           @RequestParam int salary_per_hour,
                                           @RequestParam long passport,
-                                          @RequestParam String email) {
+                                          @RequestParam String email) throws Exception {
         User user = new User(name, surname, new BCryptPasswordEncoder().encode(password), position, salary_per_hour, passport, email);
         userRepository.save(user);
 
-        sendMailServ.SendMail(email, sendMailServ.NEW_USER_HELLO_SUBJECT, sendMailServ.NEW_USER_HELLO_TEXT);
+//        sendMailServ.SendMail(email, sendMailServ.NEW_USER_HELLO_SUBJECT, sendMailServ.NEW_USER_HELLO_TEXT);
 
         LOG.info(user.toString() + " successfully saved into DB");
 

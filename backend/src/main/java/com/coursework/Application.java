@@ -22,7 +22,7 @@ public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
-    public JavaMailSender emailSender;
+    private SendMailServ sendMailServ;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
@@ -92,6 +92,7 @@ public class Application {
 
             dishRepository.save(dish5);
 
+//            sendMailServ.SendMail("dunaevai135", "Привет", "Новый сотрудник");
 
         };
     }
