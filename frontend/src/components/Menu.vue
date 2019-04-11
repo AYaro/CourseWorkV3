@@ -167,14 +167,15 @@ export default {
             console.log('New picture selected!')
             if (image) {
                 console.log('Picture loaded.')
-                this.image = image
+                // this.image = this.$refs.pictureInput.file
+                // console.log(image)
             } else {
                 console.log('FileReader API not supported: use the <form>, Luke!')
             }
         },
         addItem (){
           let datas = new FormData();
-          datas.append("image", this.image);
+          datas.append("image", this.$refs.pictureInput.file);
             let axiosConfig = {
                 headers: {
                     'Content-Type': `multipart/form-data`

@@ -35,7 +35,7 @@
                         <v-flex md12>
                             <v-card v-for="ro in table" :key="ro.id">
                                 <!--<div>Заказ: ID{{ ro.id }}</div>-->
-                                <div>День {{ (new Date(ro.day)).getDate() }} месяц </div>
+                                <div>Месяц {{ (new Date(ro.day)).getMonth() }} день {{ (new Date(ro.day)).getDate() }} </div>
                                 <v-layout row wrap>
                                     <v-flex md4>
                                         <div>Начало работы {{ ro.start_time }}</div>
