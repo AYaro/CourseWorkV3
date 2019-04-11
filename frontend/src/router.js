@@ -6,11 +6,17 @@ import Display from "./views/Display.vue"
 import User from "./components/User"
 import Order from "./components/Order"
 import CurrentOrders from "./components/CurrentOrders";
+import TimeTable from "./components/TimeTable";
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
+    {
+        path: '/worker/table',
+        name: 'TimeTable',
+        component: TimeTable
+    },
     {
       path: '/display',
       name: 'Display',
