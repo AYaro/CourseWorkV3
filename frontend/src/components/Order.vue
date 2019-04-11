@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container fluid grid-list-md>
-      <v-layout row wrap v-if="!showDetails">
+      <v-layout row wrap v-if="!showDetails && !showConfirmation">
         <v-flex md3 xs3>
           <v-navigation-drawer permanent>
             <v-toolbar flat>
@@ -39,7 +39,7 @@
                   sm6
                   md4
                   v-for="item in filterCategory"
-                  :key="item.name"
+                  :key="item.id"
                 >
                   <v-card
                     color="blue-grey darken-2"
@@ -49,7 +49,9 @@
                     <v-card-title primary-title>
                       <div>
                         <v-img
-                          src="data:image/png;base64, {{item.image}}"
+                          aspect-ratio="1,4"
+                          width="300px"
+                          :src="'data:image/png;base64, ' + item.image"
                         ></v-img>
                         <div class="headline">{{ item.name }}</div>
                         <div>Стоимость: {{ item.price }}</div>
@@ -62,7 +64,7 @@
           </v-card>
         </v-flex>
       </v-layout>
-      <v-layout justify-center row wrap v-if="showDetails">
+      <v-layout justify-center row wrap v-if="showDetails && !showConfirmation">
         <v-flex md6 xs12>
           <v-card v-if="!showComment">
             <v-card-title>Редактирование</v-card-title>
@@ -86,7 +88,7 @@
                       </v-flex>
                     </v-layout>
                   </v-card>
-                  <v-card v-for="item in chosenItems" :key="item.name">
+                  <v-card v-for="item in chosenItems" :key="item.id">
                     <v-layout row wrap>
                       <v-flex md4>
                         <v-card-title>
@@ -156,6 +158,92 @@
           </v-card>
           <v-card v-if="showComment">
             <v-card-title>Комментарий</v-card-title>
+            <v-textarea
+              solo
+              name="input-7-4"
+              label="Комментарий к заказу"
+              v-model="comment"
+            ></v-textarea>
+            <v-btn @click="showComment = !showComment">Назад</v-btn>
+          </v-card>
+        </v-flex>
+      </v-layout>
+      <v-layout justify-center row wrap v-if="showConfirmation">
+        <v-flex md6 xs12>
+          <v-card>
+            <v-card-title>Подтверждение</v-card-title>
+            <v-container fluid list-lg>
+              <v-layout row wrap>
+                <v-flex md12 xs12>
+                  <v-card>
+                    <v-layout row wrap>
+                      <v-flex md4>
+                        <v-card-title>Блюдо</v-card-title>
+                      </v-flex>
+                      <v-flex md4>
+                        <v-card-text>
+                          Количество
+                        </v-card-text>
+                      </v-flex>
+                      <v-flex md3>
+                        <v-card-text>
+                          Стоимость
+                        </v-card-text>
+                      </v-flex>
+                    </v-layout>
+                  </v-card>
+                  <v-card v-for="item in chosenItems" :key="item.id">
+                    <v-layout row wrap>
+                      <v-flex md4>
+                        <v-card-title>
+                          <div class="headline">{{ item.item.name }}</div>
+                        </v-card-title>
+                      </v-flex>
+                      <v-flex md4>
+                        <v-card-text>
+                          {{ item.quantity }}
+                        </v-card-text>
+                      </v-flex>
+                      <v-flex md3>
+                        <v-card-text>
+                          {{ item.item.price * item.quantity }}
+                        </v-card-text>
+                      </v-flex>
+                    </v-layout>
+                  </v-card>
+                </v-flex>
+                <v-flex md12 class="text-md-center">
+                  <h2>Сумма заказа: {{ sum }}</h2>
+                </v-flex>
+                <v-flex md12 class="text-md-center">
+                  <v-text-field
+                    v-model="table"
+                    type="number"
+                    :rules="numberRules"
+                    :label="errorName"
+                  >
+                    label="Номер столика" ></v-text-field
+                  >
+                </v-flex>
+                <v-flex md6 class="text-md-center">
+                  <v-btn @click="showConfirmation = !showConfirmation"
+                    >Назад</v-btn
+                  >
+                </v-flex>
+                <v-flex md6 class="text-md-center">
+                  <v-btn @click="confirmOrder()">Подтвердить</v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
+          <v-card v-if="showComment">
+            <v-card-title>Комментарий</v-card-title>
+            <v-textarea
+              solo
+              name="input-7-4"
+              label="Комментарий к заказу"
+              v-model="comment"
+            ></v-textarea>
             <v-btn @click="showComment = !showComment">Назад</v-btn>
           </v-card>
         </v-flex>
@@ -167,7 +255,7 @@
         <v-btn @click="showDetails = !showDetails">
           Редактировать
         </v-btn>
-        <v-btn>
+        <v-btn @click="showConfirmation = !showConfirmation">
           подтвердить
         </v-btn>
       </v-layout>
@@ -190,29 +278,45 @@ export default {
     return {
       items: ["Супы", "Рыба"],
       menuItems: [
-        { title: "Суп Д", price: 190, category: "Супы" },
-        { title: "Cуп B", price: 210, category: "Супы" },
-        { title: "Суп М", price: 122, category: "Супы" },
-        { title: "Cуп С", price: 211, category: "Супы" },
-        { title: "Рыба", price: 340, category: "Рыба" }
+        { id: 1, title: "Суп Д", price: 190, category: "Супы" },
+        { id: 2, title: "Cуп B", price: 210, category: "Супы" },
+        { id: 3, title: "Суп М", price: 122, category: "Супы" },
+        { id: 4, title: "Cуп С", price: 211, category: "Супы" },
+        { id: 5, title: "Рыба", price: 340, category: "Рыба" }
       ],
       right: null,
+      table: 0,
       currentCategory: "Супы",
       chosenItems: [],
+      comment: "",
       sum: 0,
       showDetails: false,
       showComment: false,
-      showInfo: false
+      showInfo: false,
+      showConfirmation: false,
+      maxLength: 45,
+      minLength: 1,
+      errorName: "",
+      numberRules: [
+        v => !!v || "Input is required",
+        v =>
+          v < this.maxLength ||
+          `${this.errorName} must be less than ${this.maxLength}`,
+        v =>
+          v < this.minLength ||
+          `${this.errorName} must be greater than ${this.minLength}`
+      ]
     };
   },
   created: function() {
     axios
       .get("http://localhost:9090/api/dish/categories")
-      .then(response => (this.items = response.data))
+      .then(response =>
+        (this.items = response.data))
       .catch(error => console.log(error));
     axios
       .get("http://localhost:9090/api/dish")
-      .then(response => (this.menuItems = response.data))
+      .then(response => {(this.menuItems = response.data); console.log(this.menuItems)})
       .catch(error => console.log(error));
   },
   computed: {
@@ -238,14 +342,30 @@ export default {
     onItemClicked(item) {
       var n = this.chosenItems.findIndex(function(chosenItem) {
         return (
-          chosenItem.item.title === item.title &&
-          chosenItem.item.price === item.price
+          chosenItem.item.id === item.id
         );
       });
       if (n > -1) {
         this.chosenItems[n].quantity = this.chosenItems[n].quantity + 1;
       } else {
         this.chosenItems.push({ item, quantity: 1 });
+      }
+    },
+    confirmOrder() {
+      if (
+        this.table >= 1 &&
+        this.table <= 45 &&
+        this.table.toString.length <= 2
+      ) {
+        this.showConfirmation = !this.showConfirmation;
+        let axiosConfig = {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+          }
+        };
+        axios.put("/api/order?"+ "table_number=" + this.table +"&comment" + this.comment, this.chosenItems, axiosConfig).catch(e => {
+          this.errors.push(e);
+        });
       }
     }
   },
