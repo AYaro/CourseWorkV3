@@ -6,7 +6,6 @@ import com.coursework.entity.OrderedDish;
 import com.coursework.repository.OrderRepository;
 import com.coursework.repository.OrderedDishRepository;
 import com.coursework.repository.UserRepository;
-import javafx.scene.canvas.GraphicsContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class OrderController {
 
     @RequestMapping(path = "", method = RequestMethod.PUT)
     public @ResponseBody long addNewOrder (@RequestParam Integer table_number,
-                                           @RequestParam String comment,
+                                           @RequestParam(required = false) String comment,
                                            @RequestBody List<OrderedDish> orderedDishes) {
         Order order = new Order(table_number, comment, DEFAULT_STATUS, new Timestamp(System.currentTimeMillis()));
 //        LOG.info("ordered: " + orderedDishes.get(0).getQuantity());
