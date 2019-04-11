@@ -73,12 +73,12 @@ public class Application {
             orderedDishRepository.save(orderedDish2);
             orderedDishRepository.save(orderedDish3);
 
-            dish = new Dish();
-            dish.setName("Жареные гвозди");
-            dish.setInMenu(true);
-            dish.setCategory("мемы");
+            Dish dish5 = new Dish();
+            dish5.setName("Жареные гвозди");
+            dish5.setInMenu(true);
+            dish5.setCategory("мемы");
 
-            dishRepository.save(dish);
+            dishRepository.save(dish5);
 
 
         };
