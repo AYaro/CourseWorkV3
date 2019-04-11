@@ -4,7 +4,9 @@ import com.coursework.SendMailServ;
 import com.coursework.entity.Order;
 import com.coursework.entity.OrderedDish;
 import com.coursework.repository.OrderRepository;
+import com.coursework.repository.OrderedDishRepository;
 import com.coursework.repository.UserRepository;
+import javafx.scene.canvas.GraphicsContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class OrderController {
 
     @Autowired
     private SendMailServ sendMailServ;
+
+    @Autowired
+    private OrderedDishRepository orderedDishRepository;
 
     @Autowired
     public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
@@ -58,11 +63,19 @@ public class OrderController {
     @RequestMapping(path = "", method = RequestMethod.PUT)
     public @ResponseBody long addNewOrder (@RequestParam Integer table_number,
                                            @RequestParam String comment,
-                                           @RequestParam List<OrderedDish> orderedDishes) {
+                                           @RequestBody List<OrderedDish> orderedDishes) {
         Order order = new Order(table_number, comment, DEFAULT_STATUS, new Timestamp(System.currentTimeMillis()));
-        orderedDishes.forEach(o -> o.setOrder(order));
+//        LOG.info("ordered: " + orderedDishes.get(0).getQuantity());
+        orderedDishes.forEach(o -> {
+            o.setOrder(order);
+        });
         order.setOrderedDishes(orderedDishes);
+
         orderRepository.save(order);
+
+        orderedDishes.forEach(o -> {
+            orderedDishRepository.save(o);
+        });
 
         LOG.info(order.toString() + " successfully saved into DB");
 
