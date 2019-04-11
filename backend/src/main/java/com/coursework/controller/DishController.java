@@ -37,7 +37,7 @@ public class DishController {
                            @RequestParam int weight,
                            @RequestParam String description,
                            @RequestParam boolean inMenu,
-                           @RequestParam MultipartFile image) throws IOException {
+                           @RequestParam(required = false) MultipartFile image) throws IOException {
         Dish dish = new Dish(name, category, price, weight, description, Base64.getEncoder().encodeToString(image.getBytes()), inMenu);
         dishRepository.save(dish);
         return dish.getId();

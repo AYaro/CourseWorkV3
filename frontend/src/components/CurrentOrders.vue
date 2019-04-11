@@ -106,7 +106,7 @@ export default {
   },
   created: function() {
     axios
-      .get("http://localhost:9090/api/order/")
+      .get("/api/order/")
       .then(response => (this.orders = response.data))
       .catch(error => console.log(error));
   }

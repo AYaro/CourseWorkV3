@@ -5,7 +5,8 @@ import Home from './views/Home'
 import Display from "./views/Display.vue"
 import User from "./components/User"
 import Order from "./components/Order"
-import CurrentOrders from "./components/CurrentOrders";
+import CurrentOrders from "./components/CurrentOrders"
+import Menu from "./components/Menu";
 
 Vue.use(Router);
 
@@ -15,6 +16,11 @@ export default new Router({
       path: '/display',
       name: 'Display',
       component: Display
+    },
+    {
+      path: '/admin/menu',
+      name: 'Menu',
+      component: Menu
     },
     {
       path: '/Order',

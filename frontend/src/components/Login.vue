@@ -37,7 +37,7 @@ export default {
     processSignIn: function() {
       axios
         .post(
-          "http://localhost:9090/login",
+          "/login",
           "username=" + this.username + "&password=" + this.password
         )
         .then(function() {

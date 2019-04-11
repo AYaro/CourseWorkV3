@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container fluid grid-list-md>
-      <v-layout row wrap v-if="!showDetails && !showConfirmation">
+      <v-layout row wrap v-if="!showDetails && !showConfirmation && !showConfirmed">
         <v-flex md3 xs3>
           <v-navigation-drawer permanent>
             <v-toolbar flat>
@@ -38,23 +38,21 @@
                   xs12
                   sm6
                   md4
-                  v-for="item in filterCategory"
-                  :key="item.id"
+                  v-for="dish in filterCategory"
+                  :key="dish.id"
                 >
                   <v-card
                     color="blue-grey darken-2"
                     class="white--text"
-                    v-on:click="onItemClicked(item)"
+                    v-on:click="onItemClicked(dish)"
                   >
                     <v-card-title primary-title>
-                      <div>
-                        <v-img
-                          aspect-ratio="1,4"
-                          width="300px"
-                          :src="'data:image/png;base64, ' + item.image"
-                        ></v-img>
-                        <div class="headline">{{ item.name }}</div>
-                        <div>Стоимость: {{ item.price }}</div>
+                      <div class="text-md-center img" style="text-align: center">
+                        <img width="230" height="180"
+                          :src="'data:image/png;base64, ' + dish.image"
+                        ></img>
+                        <div class="headline">{{ dish.name }}</div>
+                        <div>Стоимость: {{ dish.price }}</div>
                       </div>
                     </v-card-title>
                   </v-card>
@@ -88,25 +86,25 @@
                       </v-flex>
                     </v-layout>
                   </v-card>
-                  <v-card v-for="item in chosenItems" :key="item.id">
+                  <v-card v-for="dish in chosenItems" :key="dish.id">
                     <v-layout row wrap>
                       <v-flex md4>
                         <v-card-title>
-                          <div class="headline">{{ item.item.name }}</div>
+                          <div class="headline">{{ dish.dish.name }}</div>
                         </v-card-title>
                       </v-flex>
                       <v-flex md4>
                         <v-card-text>
-                          {{ item.quantity }}
+                          {{ dish.quantity }}
                           <v-icon
                             @click="
                               {
-                                item.quantity++;
+                                dish.quantity++;
                                 var s = 0;
                                 for (var i = 0; i < chosenItems.length; i++) {
                                   s =
                                     s +
-                                    chosenItems[i].item.price *
+                                    chosenItems[i].dish.price *
                                       chosenItems[i].quantity;
                                 }
                                 sum = s;
@@ -117,18 +115,18 @@
                           <v-icon
                             @click="
                               {
-                                if (item.quantity > 1) {
-                                  item.quantity--;
+                                if (dish.quantity > 1) {
+                                  dish.quantity--;
                                   var s = 0;
                                   for (var i = 0; i < chosenItems.length; i++) {
                                     s =
                                       s +
-                                      chosenItems[i].item.price *
+                                      chosenItems[i].dish.price *
                                         chosenItems[i].quantity;
                                   }
                                   sum = s;
                                 } else {
-                                  deleteChosenItem(item);
+                                  deleteChosenItem(dish);
                                 }
                               }
                             "
@@ -138,11 +136,11 @@
                       </v-flex>
                       <v-flex md3>
                         <v-card-text>
-                          {{ item.item.price * item.quantity }}
+                          {{ dish.dish.price * dish.quantity }}
                         </v-card-text>
                       </v-flex>
                       <v-flex md1>
-                        <v-icon @click="deleteChosenItem(item)">delete</v-icon>
+                        <v-icon @click="deleteChosenItem(dish)">delete</v-icon>
                       </v-flex>
                     </v-layout>
                   </v-card>
@@ -168,7 +166,7 @@
           </v-card>
         </v-flex>
       </v-layout>
-      <v-layout justify-center row wrap v-if="showConfirmation">
+      <v-layout justify-center row wrap v-if="showConfirmation && !showConfirmed">
         <v-flex md6 xs12>
           <v-card>
             <v-card-title>Подтверждение</v-card-title>
@@ -192,21 +190,21 @@
                       </v-flex>
                     </v-layout>
                   </v-card>
-                  <v-card v-for="item in chosenItems" :key="item.id">
+                  <v-card v-for="dish in chosenItems" :key="dish.id">
                     <v-layout row wrap>
                       <v-flex md4>
                         <v-card-title>
-                          <div class="headline">{{ item.item.name }}</div>
+                          <div class="headline">{{ dish.dish.name }}</div>
                         </v-card-title>
                       </v-flex>
                       <v-flex md4>
                         <v-card-text>
-                          {{ item.quantity }}
+                          {{ dish.quantity }}
                         </v-card-text>
                       </v-flex>
                       <v-flex md3>
                         <v-card-text>
-                          {{ item.item.price * item.quantity }}
+                          {{ dish.dish.price * dish.quantity }}
                         </v-card-text>
                       </v-flex>
                     </v-layout>
@@ -248,8 +246,16 @@
           </v-card>
         </v-flex>
       </v-layout>
+      <v-layout justify-center row wrap v-if="showConfirmed">
+        <v-flex md6 xs12>
+          <v-card>
+            <v-card-title>Заказ принят на обработку</v-card-title>
+            <v-card-title>Ваш заказ №{{id}}</v-card-title>
+          </v-card>
+        </v-flex>
+      </v-layout>
     </v-container>
-    <v-footer fixed height="80px">
+    <v-footer fixed height="80px" v-if="!showConfirmed">
       <v-layout justify-center row wrap>
         <div class="sum">Сумма заказа: {{ this.sum }}</div>
         <v-btn @click="showDetails = !showDetails">
@@ -285,6 +291,7 @@ export default {
         { id: 5, title: "Рыба", price: 340, category: "Рыба" }
       ],
       right: null,
+      id: 0,
       table: 0,
       currentCategory: "Супы",
       chosenItems: [],
@@ -292,7 +299,7 @@ export default {
       sum: 0,
       showDetails: false,
       showComment: false,
-      showInfo: false,
+      showConfirmed: false,
       showConfirmation: false,
       maxLength: 45,
       minLength: 1,
@@ -310,45 +317,44 @@ export default {
   },
   created: function() {
     axios
-      .get("http://localhost:9090/api/dish/categories")
+      .get("/api/dish/categories")
       .then(response =>
         (this.items = response.data))
       .catch(error => console.log(error));
     axios
-      .get("http://localhost:9090/api/dish")
+      .get("/api/dish")
       .then(response => {(this.menuItems = response.data); console.log(this.menuItems)})
       .catch(error => console.log(error));
   },
   computed: {
     filterCategory: function() {
       let category = this.currentCategory;
-      return this.menuItems.filter(function(item) {
-        if (item.category === category) {
-          return item;
+      return this.menuItems.filter(function(dish) {
+        if (dish.category === category) {
+          return dish;
         }
       });
     }
   },
   methods: {
-    deleteChosenItem(item) {
+    deleteChosenItem(dish) {
       var n = this.chosenItems.findIndex(function(chosenItem) {
         return (
-          chosenItem.item.title === item.item.title &&
-          chosenItem.item.price === item.item.price
+          chosenItem.dish.id === dish.dish.id
         );
       });
       this.chosenItems.splice(n, 1);
     },
-    onItemClicked(item) {
+    onItemClicked(dish) {
       var n = this.chosenItems.findIndex(function(chosenItem) {
         return (
-          chosenItem.item.id === item.id
+          chosenItem.dish.id === dish.id
         );
       });
       if (n > -1) {
         this.chosenItems[n].quantity = this.chosenItems[n].quantity + 1;
       } else {
-        this.chosenItems.push({ item, quantity: 1 });
+        this.chosenItems.push({ dish, quantity: 1 });
       }
     },
     confirmOrder() {
@@ -363,9 +369,12 @@ export default {
             'Content-Type': 'application/json;charset=UTF-8',
           }
         };
-        axios.put("/api/order?"+ "table_number=" + this.table +"&comment" + this.comment, this.chosenItems, axiosConfig).catch(e => {
+        axios.put("/api/order?"+ "table_number=" + this.table +"&comment" + this.comment, this.chosenItems, axiosConfig).then(response =>
+                (this.id = response.data)).catch(e => {
           this.errors.push(e);
         });
+        this.showConfirmation = false;
+        this.showConfirmed = true;
       }
     }
   },
@@ -373,7 +382,7 @@ export default {
     chosenItems: function() {
       var s = 0;
       for (var i = 0; i < this.chosenItems.length; i++) {
-        s = s + this.chosenItems[i].item.price * this.chosenItems[i].quantity;
+        s = s + this.chosenItems[i].dish.price * this.chosenItems[i].quantity;
       }
       this.sum = s;
     }
@@ -388,11 +397,14 @@ export default {
   font-size: 24px;
 }
 .v-card--reveal {
-  align-items: center;
+    align-items: center;
   bottom: 0;
   justify-content: center;
   opacity: 0.5;
   position: absolute;
   width: 100%;
 }
+  .img{
+    width: 100%;
+  }
 </style>
