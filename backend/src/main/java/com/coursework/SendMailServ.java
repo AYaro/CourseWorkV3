@@ -34,7 +34,7 @@ public class SendMailServ {
 
     public void SendMail (String to, String subject, String text) throws Exception {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("Парользабыл <javamail@dunaevai135.me>");
+        message.setFrom("Парользабыл <email>");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
@@ -42,7 +42,7 @@ public class SendMailServ {
 //        emailSender.send(message);
 
         XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
-                .setUsernameAndPassword("dunaevai135_cv4","very_strong_pass")
+                .setUsernameAndPassword("your_login","your_password")
                 .setXmppDomain("jabber.ru")
                 .setHost("jabber.ru")
                 .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
@@ -52,7 +52,7 @@ public class SendMailServ {
         connection.connect(); //Establishes a connection to the server
         connection.login(); //Logs in
         ChatManager chatManager = ChatManager.getInstanceFor(connection);
-        EntityBareJid jid = JidCreate.entityBareFrom("dunaevai135@jabber.ru");
+        EntityBareJid jid = JidCreate.entityBareFrom("your_login@jabber.ru");
         Chat chat = chatManager.createChat(jid);
         chat.sendMessage(subject + " " + text);
     }
